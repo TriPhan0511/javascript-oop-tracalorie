@@ -37,6 +37,126 @@
       class="bg-primary d-sm-flex justify-content-between align-items-center text-white text-center py-2 px-5"
     >
       <h1><i class="fa-solid fa-utensils"></i> Tracalorie</h1>
+      <div>
+        <button
+          class="btn btn-outline-light mx-3"
+          data-bs-toggle="modal"
+          data-bs-target="#limit-modal"
+        >
+          Set Daily Limit
+        </button>
+        <button id="reset" class="btn btn-outline-light">Reset Day</button>
+      </div>
     </header>
+
+    <!-- Stats -->
+    <section class="stats my-5 px-5">
+      <div class="row g-3 my-3">
+        <div class="col-md-6">
+          <div class="card text-center bg-dark text-white">
+            <div class="card-body">
+              <div id="calories-limit" class="fs-1 fw-bold">2000</div>
+              <p class="fs-4">Daily Calories Limit</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-center bg-primary text-white">
+            <div class="card-body">
+              <div id="calories-total" class="fs-1 fw-bold">400</div>
+              <p class="fs-4">Gain/Loss</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 text-center">
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <div id="calories-consumed" class="fs-1 fw-bold">700</div>
+              <p class="fs-4">Calories Consumed</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <div id="calories-consumed" class="fs-1 fw-bold">300</div>
+              <p class="fs-4">Calories Burned</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <div id="calories-consumed" class="fs-1 fw-bold">1600</div>
+              <p class="fs-4">Calories Remaining</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section class="px-5">
+      <div class="progress">
+        <div
+          id="calorie-progress"
+          class="progress-bar"
+          role="progressbar"
+        ></div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="filter my-5 px-5">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="mt-3">
+            <input
+              type="text"
+              id="filter-meals"
+              class="form-control"
+              placeholder="Filter Meals..."
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <input
+              type="text"
+              id="filter-workouts"
+              class="form-control"
+              placeholder="Filter Workouts..."
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Items -->
+    <section class="items mx-5">
+      <div class="row g-4">
+        <!-- Meals -->
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <h2 class="border-start border-primary border-3 p-2">
+              Meals / Food Items
+            </h2>
+            <button
+              class="btn btn-primary btn-sm ms-auto text-white fw-bold py-2 px-3 h-100"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse-meal"
+              aria-expanded="false"
+              aria-controls="collapse-meal"
+            >
+              <i class="fa-solid fa-plus"></i> Add Meal
+            </button>
+          </div>
+
+          <!-- Add Meal Form -->
+        </div>
+      </div>
+    </section>
   </body>
 </html>
