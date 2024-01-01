@@ -54,7 +54,7 @@
         <div class="col-md-6">
           <div class="card text-center bg-dark text-white">
             <div class="card-body">
-              <div id="calories-limit" class="fs-1 fw-bold"></div>
+              <div id="calories-limit" class="fs-1 fw-bold">2000</div>
               <p class="fs-4">Daily Calories Limit</p>
             </div>
           </div>
@@ -62,7 +62,7 @@
         <div class="col-md-6">
           <div class="card text-center bg-primary text-white">
             <div class="card-body">
-              <div id="calories-total" class="fs-1 fw-bold"></div>
+              <div id="calories-total" class="fs-1 fw-bold">400</div>
               <p class="fs-4">Gain/Loss</p>
             </div>
           </div>
@@ -72,7 +72,7 @@
         <div class="col-md-4">
           <div class="card bg-light">
             <div class="card-body">
-              <div id="calories-consumed" class="fs-1 fw-bold"></div>
+              <div id="calories-consumed" class="fs-1 fw-bold">700</div>
               <p class="fs-4">Calories Consumed</p>
             </div>
           </div>
@@ -80,7 +80,7 @@
         <div class="col-md-4">
           <div class="card bg-light">
             <div class="card-body">
-              <div id="calories-burned" class="fs-1 fw-bold"></div>
+              <div id="calories-burned" class="fs-1 fw-bold">300</div>
               <p class="fs-4">Calories Burned</p>
             </div>
           </div>
@@ -88,7 +88,7 @@
         <div class="col-md-4">
           <div class="card bg-light">
             <div class="card-body">
-              <div id="calories-remaining" class="fs-1 fw-bold"></div>
+              <div id="calories-remaining" class="fs-1 fw-bold">1600</div>
               <p class="fs-4">Calories Remaining</p>
             </div>
           </div>
@@ -172,26 +172,16 @@
                     placeholder="Enter Calories"
                   />
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-primary text-white"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapse-meal"
-                  aria-expanded="false"
-                  aria-controls="collapse-meal"
-                >
+                <button type="submit" class="btn btn-primary text-white">
                   Add Meal Item
                 </button>
-                <!-- <button type="submit" class="btn btn-primary text-white">
-                  Add Meal Item
-                </button> -->
               </form>
             </div>
           </div>
           <!-- Meal Items -->
           <div id="meal-items">
             <!-- Item 1 -->
-            <!-- <div class="card my-2">
+            <div class="card my-2">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                   <h4 class="mx-1">Breakfast</h4>
@@ -205,7 +195,23 @@
                   </button>
                 </div>
               </div>
-            </div> -->
+            </div>
+            <!-- Item 2 -->
+            <div class="card my-2">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h4 class="mx-1">Lunch</h4>
+                  <div
+                    class="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5"
+                  >
+                    620
+                  </div>
+                  <button class="delete btn btn-danger btn-sm mx-2">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- Workouts -->
@@ -242,26 +248,16 @@
                     placeholder="Enter Calories"
                   />
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-secondary text-white"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapse-workout"
-                  aria-expanded="false"
-                  aria-controls="collapse-workout"
-                >
+                <button type="submit" class="btn btn-secondary text-white">
                   Add Workout Item
                 </button>
-                <!-- <button type="submit" class="btn btn-secondary text-white">
-                  Add Workout Item
-                </button> -->
               </form>
             </div>
           </div>
           <!-- Workout Items -->
           <div id="workout-items">
             <!-- Item 1 -->
-            <!-- <div class="card my-2">
+            <div class="card my-2">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                   <h4 class="mx-1">Treadmill 1 Hour</h4>
@@ -275,7 +271,23 @@
                   </button>
                 </div>
               </div>
-            </div> -->
+            </div>
+            <!-- Item 2 -->
+            <div class="card my-2">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h4 class="mx-1">Bike 90 Minutes</h4>
+                  <div
+                    class="fs-1 bg-secondary text-white text-center rounded-2 px-2 px-sm-5"
+                  >
+                    500
+                  </div>
+                  <button class="delete btn btn-danger btn-sm mx-2">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -315,11 +327,7 @@
                   placeholder="2000"
                 />
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary text-white"
-                data-bs-dismiss="modal"
-              >
+              <button type="submit" class="btn btn-primary text-white">
                 Save
               </button>
             </form>
@@ -327,7 +335,5 @@
         </div>
       </div>
     </div>
-
-    <div style="height: 70vh"></div>
   </body>
 </html>
