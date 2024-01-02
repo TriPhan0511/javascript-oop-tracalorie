@@ -17,6 +17,14 @@ class CalorieTracker {
     this._totalCalories -= workout.calories
   }
 
+  removeMeal(id) {
+    this._meals = this._meals.filter((meal) => meal.id !== id)
+  }
+
+  removeWorkout(id) {
+    this._workouts = this._workouts.filter((workout) => workout.id !== id)
+  }
+
   _displayCaloriesTotal(ele) {
     if (ele) {
       ele.textContent = this.caloriesTotal
@@ -92,11 +100,11 @@ class CalorieTracker {
   }
 
   resetDay() {
-    this._calorieLimit = 2000
+    this._calorieLimit = 0
     this._totalCalories = 0
     this._meals = []
     this._workouts = []
-    this._renderStats()
+    this.loadItems()
   }
 
   loadItems() {
@@ -111,6 +119,7 @@ class CalorieTracker {
       mealItems.innerHTML = ''
       this._meals.forEach(({ id, name, calories }) => {
         const div = document.createElement('div')
+        div.setAttribute('id', id)
         div.className = 'card my-2'
         div.innerHTML = `
           <div class="card-body">
@@ -136,8 +145,9 @@ class CalorieTracker {
     const workoutItems = document.querySelector('#workout-items')
     if (workoutItems) {
       workoutItems.innerHTML = ''
-      this._workouts.forEach(({ name, calories }) => {
+      this._workouts.forEach(({ id, name, calories }) => {
         const div = document.createElement('div')
+        div.setAttribute('id', id)
         div.className = 'card my-2'
         div.innerHTML = `
           <div class="card-body">
@@ -200,6 +210,9 @@ class App {
 
     // Add new item
     this._newItem(tracker)
+
+    // Remove an item
+    this._removeItem(tracker)
   }
 
   _setLimit(tracker) {
@@ -263,13 +276,79 @@ class App {
           tracker.addWorkout(new Workout(name, calories))
         }
         tracker.loadItems()
+        nameInp.value = ''
+        caloriesInp.value = ''
       }
     }
   }
 
-  _removeItem() {}
+  _removeItem(tracker) {
+    this._removeMealOrWorkout('#meal-items', tracker)
+    this._removeMealOrWorkout('#workout-items', tracker, false)
+    tracker.loadItems()
+  }
+
+  _removeMealOrWorkout(selectorId, tracker, isMeal = true) {
+    const itemsSection = document.querySelector(selectorId)
+    if (itemsSection) {
+      itemsSection.addEventListener('click', (e) => {
+        let card
+        if (e.target.nodeName === 'I') {
+          card =
+            e.target.parentElement.parentElement.parentElement.parentElement
+        } else if (e.target.nodeName === 'BUTTON') {
+          card = e.target.parentElement.parentElement.parentElement
+        }
+        if (card && card.classList.contains('card')) {
+          card.remove()
+          if (isMeal) {
+            tracker.removeMeal(card.getAttribute('id'))
+          } else {
+            tracker.removeWorkout(card.getAttribute('id'))
+          }
+        }
+      })
+    }
+  }
+  // _removeMealOrWorkout(selectorId, isMeal = true) {
+  //   const itemsSection = document.querySelector(selectorId)
+  //   if (itemsSection) {
+  //     itemsSection.addEventListener('click', (e) => {
+  //       let card
+  //       if (e.target.nodeName === 'I') {
+  //         card =
+  //           e.target.parentElement.parentElement.parentElement.parentElement
+  //       } else if (e.target.nodeName === 'BUTTON') {
+  //         card = e.target.parentElement.parentElement.parentElement
+  //       }
+  //       if (card && card.classList.contains('card')) {
+  //         card.remove()
+  //       }
+  //     })
+  //   }
+  // }
 }
 
 // ------------------------------------------
 // Run app
 new App()
+
+// class Person {
+//   constructor(id, name) {
+//     this.id = id
+//     this.name = name
+//   }
+// }
+
+// let people = [
+//   new Person('1', 'Alex'),
+//   new Person('2', 'Brad'),
+//   new Person('3', 'Cindy'),
+// ]
+
+// console.log(people)
+
+// people = people.filter((p) => p.id !== '2')
+// // people = people.filter((p) => p.id !== undefined)
+
+// console.log(people)
