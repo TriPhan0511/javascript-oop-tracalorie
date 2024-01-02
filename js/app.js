@@ -18,16 +18,24 @@ class CalorieTracker {
   }
 
   removeMeal(id) {
+    const removedMeal = this._meals.find((meal) => meal.id === id)
+    if (removedMeal) {
+      this._totalCalories -= removedMeal.calories
+    }
     this._meals = this._meals.filter((meal) => meal.id !== id)
   }
 
   removeWorkout(id) {
+    const removedWorkout = this._workouts.find((workout) => workout.id === id)
+    if (removedWorkout) {
+      this._totalCalories += removedWorkout.calories
+    }
     this._workouts = this._workouts.filter((workout) => workout.id !== id)
   }
 
   _displayCaloriesTotal(ele) {
     if (ele) {
-      ele.textContent = this.caloriesTotal
+      ele.textContent = this._totalCalories
     }
   }
 
@@ -83,15 +91,11 @@ class CalorieTracker {
     )
   }
 
-  get caloriesTotal() {
-    return this.caloriesConsumed - this.caloriesBurned
-  }
-
   get caloriesRemaining() {
-    if (this.caloriesTotal === 0) {
+    if (this._totalCalories === 0) {
       return 0
     }
-    return this._calorieLimit - this.caloriesTotal
+    return this._calorieLimit - this._totalCalories
   }
 
   setLimit(limit) {
@@ -111,6 +115,7 @@ class CalorieTracker {
     this._renderStats()
     this._displayMeals()
     this._displayWorkouts()
+    console.log('loadItems')
   }
 
   _displayMeals() {
@@ -285,7 +290,6 @@ class App {
   _removeItem(tracker) {
     this._removeMealOrWorkout('#meal-items', tracker)
     this._removeMealOrWorkout('#workout-items', tracker, false)
-    tracker.loadItems()
   }
 
   _removeMealOrWorkout(selectorId, tracker, isMeal = true) {
@@ -306,27 +310,11 @@ class App {
           } else {
             tracker.removeWorkout(card.getAttribute('id'))
           }
+          tracker.loadItems()
         }
       })
     }
   }
-  // _removeMealOrWorkout(selectorId, isMeal = true) {
-  //   const itemsSection = document.querySelector(selectorId)
-  //   if (itemsSection) {
-  //     itemsSection.addEventListener('click', (e) => {
-  //       let card
-  //       if (e.target.nodeName === 'I') {
-  //         card =
-  //           e.target.parentElement.parentElement.parentElement.parentElement
-  //       } else if (e.target.nodeName === 'BUTTON') {
-  //         card = e.target.parentElement.parentElement.parentElement
-  //       }
-  //       if (card && card.classList.contains('card')) {
-  //         card.remove()
-  //       }
-  //     })
-  //   }
-  // }
 }
 
 // ------------------------------------------
