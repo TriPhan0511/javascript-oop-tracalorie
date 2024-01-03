@@ -1,7 +1,7 @@
 // CalorieTracker class
 class CalorieTracker {
   constructor() {
-    this._calorieLimit = 2000
+    this._calorieLimit = 3000
     this._totalCalories = 0
     this._meals = []
     this._workouts = []
@@ -10,14 +10,13 @@ class CalorieTracker {
     // MyStorage.setCalorieLimit(this._calorieLimit)
     // MyStorage.setTotalCalories(this._totalCalories)
 
-    // Dummy data
-    this.addMeal(new Meal('Breakfast', 350))
-    this.addMeal(new Meal('Lunch', 620))
-    this.addWorkout(new Workout('Treadmill 1 Hour', 400))
-    this.addWorkout(new Workout('Bike 90 Minutes', 500))
+    // // Dummy data
+    // this.addMeal(new Meal('Breakfast', 350))
+    // this.addMeal(new Meal('Lunch', 620))
+    // this.addWorkout(new Workout('Treadmill 1 Hour', 400))
+    // this.addWorkout(new Workout('Bike 90 Minutes', 500))
 
     // Render Stats
-    // this._renderStats()
     this._displayCalorieLimit(document.querySelector('#calories-limit'))
     this._displayCaloriesConsumed(document.querySelector('#calories-consumed'))
     this._displayCaloriesBurned(document.querySelector('#calories-burned'))
@@ -29,13 +28,12 @@ class CalorieTracker {
 
   _displayCaloriesTotal(ele) {
     if (ele) {
-      ele.textContent = MyStorage.getCalorieLimit()
-      // ele.textContent = this._totalCalories
+      ele.textContent = MyStorage.getTotalCalories()
     }
   }
   _displayCalorieLimit(ele) {
     if (ele) {
-      ele.textContent = this._calorieLimit
+      ele.textContent = MyStorage.getCalorieLimit()
     }
   }
   _displayCaloriesConsumed(ele) {
@@ -122,6 +120,8 @@ class CalorieTracker {
   addMeal(meal) {
     this._meals.push(meal)
     this._totalCalories += meal.calories
+    // Save to localStorage
+    MyStorage.saveMeal(this._meals)
   }
   removeMeal(id) {
     const removedMeal = this._meals.find((meal) => meal.id === id)
@@ -150,6 +150,9 @@ class CalorieTracker {
   }
   setLimit(limit) {
     this._calorieLimit = parseInt(limit)
+    // Save to localStorage
+    MyStorage.setCalorieLimit(limit)
+    // Re-render stats
     this._renderStats()
   }
   loadItems() {
@@ -191,7 +194,7 @@ class App {
     const tracker = new CalorieTracker()
 
     // Render items
-    tracker.loadItems()
+    // tracker.loadItems()
 
     // Set calories limit
     this._setLimit(tracker)
@@ -306,58 +309,84 @@ class App {
 // Storage class
 class MyStorage {
   static getCalorieLimit() {
-    return JSON.parse(localStorage.getItem('calorieLimit'))
+    const result = JSON.parse(localStorage.getItem('tracker'))?.calorieLimit
+    return result ? result : 0
   }
-
   static setCalorieLimit(calorieLimit) {
-    let tracker = JSON.stringify(localStorage.getItem('tracker'))
-    console.log(tracker)
-    if (!tracker) {
-      tracker = {}
-    } else {
+    let tracker = localStorage.getItem('tracker')
+    if (tracker) {
+      tracker = JSON.parse(tracker)
       tracker = { ...tracker, calorieLimit }
+    } else {
+      tracker = { calorieLimit }
     }
-    console.log(tracker)
+    localStorage.setItem('tracker', JSON.stringify(tracker))
   }
-  // static getCalorieLimit() {
-  //   return JSON.parse(localStorage.getItem('calorieLimit'))
+
+  static getTotalCalories() {
+    const result = JSON.parse(localStorage.getItem('tracker'))?.totalCalories
+    return result ? result : 0
+  }
+
+  // todo
+  // static setTotalCalories(totalCalories) {}
+
+  // static updateCalories() {
+  //   let tracker = localStorage.getItem('tracker')
+  //   const consumedCalories = this._meals.reduce(
+  //     (accumulator, currentValue) => accumulator + currentValue.calories,
+  //     0
+  //   )
+  //   const burnedCalories = this.workouts.reduce(
+  //     (accumulator, currentValue) => accumulator + currentValue.calories,
+  //     0
+  //   )
+  //   const totalCalories = consumedCalories - burnedCalories
+  //   const remainingCalories = MyStorage.getCalorieLimit() - totalCalories
+  //   if (!tracker) {
+  //     tracker = JSON.parse(tracker)
+  //     tracker = {
+  //       ...tracker,
+  //       consumedCalories,
+  //       burnedCalories,
+  //       totalCalories,
+  //       remainingCalories,
+  //     }
+  //     localStorage.setItem('tracker', JSON.stringify(tracker))
+  //   }
   // }
 
-  // static setCalorieLimit(amount) {
-  //   localStorage.setItem('calorieLimit', JSON.stringify(amount))
-  // }
-
-  // static getTotalCalories() {
-  //   return JSON.parse(localStorage.getItem('totalCalories'))
-  // }
-
-  // static setTotalCalories(amount) {
-  //   localStorage.setItem('totalCalories', JSON.stringify(amount))
-  // }
+  static saveMeal(meals) {
+    let tracker = localStorage.getItem('tracker')
+    if (tracker) {
+      tracker = JSON.parse(tracker)
+      tracker = { ...tracker, meals }
+    } else {
+      tracker = { meals }
+    }
+    localStorage.setItem('tracker', JSON.stringify(tracker))
+  }
 }
+//   static saveMeal(meal) {
+//     let tracker = localStorage.getItem('tracker')
+//     let meals
+//     if (tracker) {
+//       tracker = JSON.parse(tracker)
+//       meals = tracker.meals
+//       if (!meals) {
+//         meals = []
+//       }
+//       meals.push(meal)
+//       tracker = { ...tracker, meals }
+//     } else {
+//       meals = []
+//       meals.push(meal)
+//       tracker = { meals }
+//     }
+//     localStorage.setItem('tracker', JSON.stringify(tracker))
+//   }
+// }
 
 // ------------------------------------------
 // Run app
 new App()
-
-// localStorage.setItem('myCat', 'Tom')
-// console.log(localStorage.getItem('myCat'))
-
-// localStorage.removeItem('myCat')
-// localStorage.clear()
-
-// const numbers = [1, 2, 3, 4, 5]
-// localStorage.setItem('nums', JSON.stringify(numbers))
-
-// const receivedArr = JSON.parse(localStorage.getItem('nums'))
-// console.log(receivedArr)
-// receivedArr.forEach((element) => {
-//   console.log(element)
-// })
-
-// localStorage.clear()
-
-// MyStorage.setCalorieLimit(200)
-// console.log(MyStorage.getCalorieLimit())
-
-MyStorage.setCalorieLimit(100)
